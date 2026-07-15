@@ -1,20 +1,5 @@
 import path from 'path';
-import dns from 'dns';
 import type { Core } from '@strapi/strapi';
-
-// Monkey-patch dns.lookup globally to force IPv4 (family: 4) for all network requests,
-// resolving Render's IPv6 ENETUNREACH database connection issue.
-const originalLookup = dns.lookup;
-(dns as any).lookup = function (hostname: string, options: any, callback: any) {
-  if (typeof options === 'function') {
-    callback = options;
-    options = {};
-  } else if (typeof options === 'number') {
-    options = { family: options };
-  }
-  const opt = { ...options, family: 4 };
-  return originalLookup.call(dns, hostname, opt, callback);
-};
 
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
