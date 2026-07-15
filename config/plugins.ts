@@ -50,6 +50,24 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
       },
     },
   },
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST', 'smtp.gmail.com'),
+        port: env.int('SMTP_PORT', 587),
+        secure: env.int('SMTP_PORT', 587) === 465, // SSL on 465, TLS/STARTTLS on 587
+        auth: {
+          user: env('SMTP_USER'),
+          pass: env('SMTP_PASS'),
+        },
+      },
+      settings: {
+        defaultFrom: env('SMTP_FROM', 'orders@bronkoe.in'),
+        defaultReplyTo: env('SMTP_FROM', 'orders@bronkoe.in'),
+      },
+    },
+  },
 });
 
 export default config;

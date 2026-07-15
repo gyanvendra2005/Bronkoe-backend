@@ -49,6 +49,15 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "retailPrice": {
+      "type": "decimal"
+    },
+    "sizesStock": {
+      "type": "json"
     }
   }
 }
