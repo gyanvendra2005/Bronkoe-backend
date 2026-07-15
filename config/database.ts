@@ -1,5 +1,9 @@
 import path from 'path';
+import dns from 'dns';
 import type { Core } from '@strapi/strapi';
+
+// Force Node to resolve DNS hostnames via IPv4 first to bypass Render's IPv6 limitation
+dns.setDefaultResultOrder('ipv4first');
 
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
